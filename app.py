@@ -1,7 +1,7 @@
 """API de Didppi.
 
 Un solo proyecto de Vercel: este archivo es el backend y la carpeta
-``public/`` (la compila Vite) es la interfaz. Las rutas /api llegan aquí.
+``dist/`` (la compila Vite) es la interfaz. Las rutas /api llegan aquí.
 """
 
 from pathlib import Path
@@ -49,6 +49,6 @@ def post_inspeccionar(pedido: PedidoIn):
 # En Vercel, app.frontend publica la interfaz en el mismo dominio.
 # En local, Vite sirve la interfaz y proxea /api hacia este proceso.
 _frontend = getattr(app, "frontend", None)
-_public = Path(__file__).resolve().parent / "public"
+_public = Path(__file__).resolve().parent / "dist"
 if _frontend is not None and _public.exists():
     _frontend("/", directory=str(_public), fallback="index.html")

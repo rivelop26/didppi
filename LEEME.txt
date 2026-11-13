@@ -52,4 +52,4 @@ Publicar en Vercel
 4. La interfaz queda en el mismo dominio que /api/salud.
 
 El archivo de entrada del backend es app.py. La interfaz compilada queda
-en public/, y Vercel la sirve desde ahí.
+en dist/, y Vercel la sirve desde ahí.

@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   publicDir: "estaticos",
   build: {
-    outDir: "public",
+    outDir: "dist",
     emptyOutDir: true,
   },
   server: {
