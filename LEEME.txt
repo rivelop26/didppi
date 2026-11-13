@@ -1,0 +1,55 @@
+Didppi
+======
+
+Recorrido para armar el motor de inferencia de un pedido a domicilio.
+La interfaz está en React. El motor está en Python. En Vercel se publica
+como un solo proyecto: la raíz del proyecto es esta carpeta.
+
+Los estudiantes abren la ruta, encajan los siete métodos y pueden cambiar
+el pedido. Si una pieza no se entiende, el botón «Consultar el concepto»
+explica la cuenta con otros números y afloja la actividad.
+
+Qué editar
+----------
+
+motor/politicas.py   las reglas del restaurante
+motor/casos.py       los pedidos de ejemplo
+
+Correr en local
+---------------
+
+Terminal 1, desde esta carpeta:
+
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    uvicorn app:app --reload --port 8000
+
+Terminal 2:
+
+    npm install
+    npm run dev
+
+Abrir http://localhost:5173
+
+La comanda llama a http://127.0.0.1:8000/api. Vite reenvía /api hacia ahí.
+
+Sin interfaz, los mismos casos:
+
+    python3 -m motor ana
+    python3 -m motor todos
+
+Pruebas del motor:
+
+    python3 -m unittest tests.test_despacho
+
+Publicar en Vercel
+------------------
+
+1. Importa el repositorio.
+2. En Root Directory elige ensamble. No uses la carpeta de todo el curso.
+3. Vercel instala Python por requirements.txt y corre el build de npm.
+4. La interfaz queda en el mismo dominio que /api/salud.
+
+El archivo de entrada del backend es app.py. La interfaz compilada queda
+en public/, y Vercel la sirve desde ahí.
