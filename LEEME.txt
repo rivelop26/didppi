@@ -48,7 +48,8 @@ Publicar en Vercel
 
 1. Importa el repositorio.
 2. En Root Directory elige ensamble. No uses la carpeta de todo el curso.
-3. Vercel instala Python por requirements.txt y corre el build de npm.
+3. El Framework Preset tiene que ser FastAPI. Vercel instala Python por
+   requirements.txt y corre el build de npm.
 4. La interfaz queda en el mismo dominio que /api/salud.
 
 El archivo de entrada del backend es app.py. La interfaz compilada queda
