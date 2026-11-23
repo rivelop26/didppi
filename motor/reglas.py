@@ -23,6 +23,12 @@ class Regla:
     def especificidad(self):
         return len(self.si)
 
+    def __repr__(self):
+        return (
+            f"Regla({self.id!r}, si={self.si!r}, entonces={self.entonces!r}, "
+            f"prioridad={self.prioridad}, cf={self.cf})"
+        )
+
 
 class Constructor:
     """Cinco pasos para escribir una política: id, SI, ENTONCES, prioridad, CF."""

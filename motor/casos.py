@@ -90,3 +90,64 @@ def preset_por_id(caso_id):
         if preset["id"] == caso_id:
             return preset
     return None
+
+
+def _respuestas(caso_id, **cambios):
+    respuestas = {nombre: info["valor"] for nombre, info in preset_por_id(caso_id)["hechos"].items()}
+    respuestas.update(cambios)
+    return respuestas
+
+
+# Subsistema de consultas: el pedido llega vacío y el cliente contesta.
+# None es «no sé». Las respuestas entran con certeza 1.0.
+CASOS_CONSULTA = [
+    {
+        "id": "ana",
+        "nombre": "Ana",
+        "titulo": "Cerca y seco",
+        "relato": "A 2 km, pagó, no llueve y no pidió cancelar. El motor necesita las cuatro respuestas.",
+        "respuestas": _respuestas("ana"),
+    },
+    {
+        "id": "sofia",
+        "nombre": "Sofía",
+        "titulo": "Pidió cancelar",
+        "relato": "Escribió que quiere cancelar. ¿Hace falta preguntarle algo más?",
+        "respuestas": _respuestas("sofia"),
+    },
+    {
+        "id": "hugo",
+        "nombre": "Hugo",
+        "titulo": "Sin pago y lejos",
+        "relato": "La pasarela no confirmó el pago y vive a 10 km.",
+        "respuestas": _respuestas("hugo"),
+    },
+    {
+        "id": "luis",
+        "nombre": "Luis",
+        "titulo": "Lluvia cerca",
+        "relato": "A 2,5 km, pagó y está lloviendo.",
+        "respuestas": _respuestas("luis"),
+    },
+    {
+        "id": "marco",
+        "nombre": "Marco",
+        "titulo": "Zona media con lluvia",
+        "relato": "A 6 km, pagó y llueve. Una regla empuja a enviar y otra lo frena.",
+        "respuestas": _respuestas("marco"),
+    },
+    {
+        "id": "marco_sin_reporte",
+        "nombre": "Marco sin reporte",
+        "titulo": "No sabe si llueve",
+        "relato": "El mismo Marco, pero no sabe si está lloviendo.",
+        "respuestas": _respuestas("marco", llueve=None),
+    },
+    {
+        "id": "ana_sin_reporte",
+        "nombre": "Ana sin reporte",
+        "titulo": "No sabe si llueve",
+        "relato": "La misma Ana, pero no sabe si está lloviendo.",
+        "respuestas": _respuestas("ana", llueve=None),
+    },
+]

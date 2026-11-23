@@ -1,4 +1,4 @@
-export default function Portada({ onEntrar }) {
+export default function Portada({ onEntrar, onConsultas }) {
   return (
     <main className="portada">
       <div className="logo-marco">
@@ -51,9 +51,28 @@ export default function Portada({ onEntrar }) {
         </p>
       </section>
 
-      <button type="button" className="btn btn-principal" onClick={onEntrar}>
-        Entrar al recorrido
-      </button>
+      <section>
+        <h2>Segundo recorrido: el subsistema de consultas</h2>
+        <p>
+          El mismo pedido llega sin datos. El motor tiene que preguntarlos, pero no todos ni en
+          cualquier orden: detecta qué falta, pregunta primero lo que más ayuda a decidir, acepta un
+          «no sé» y para apenas está seguro.
+        </p>
+        <ol className="aprender">
+          <li>Una consulta en vivo: respondes como el cliente y ves qué reglas mueren, cuáles se disparan y por qué llega cada pregunta.</li>
+          <li>Las estructuras de Python que guardan la consulta: dict, list, tuple, set y una clase.</li>
+          <li>Siete piezas: evaluar_condicion, estado_regla, disparar, puntaje_pregunta, siguiente_pregunta, guardar y correr.</li>
+        </ol>
+      </section>
+
+      <div className="acciones">
+        <button type="button" className="btn btn-principal" onClick={onEntrar}>
+          Entrar al recorrido del motor
+        </button>
+        <button type="button" className="btn btn-principal btn-consultas" onClick={onConsultas}>
+          Entrar al subsistema de consultas
+        </button>
+      </div>
     </main>
   );
 }

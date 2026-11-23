@@ -9,11 +9,27 @@ Los estudiantes abren la ruta, encajan los siete métodos y pueden cambiar
 el pedido. Si una pieza no se entiende, el botón «Consultar el concepto»
 explica la cuenta con otros números y afloja la actividad.
 
+Desde la portada hay un segundo recorrido: el subsistema de consultas.
+El mismo pedido llega sin datos y el motor los pregunta. Tiene tres partes:
+una consulta en vivo (el estudiante responde como el cliente, incluso
+«No sé»), las estructuras de Python que la guardan y siete piezas de código.
+
 Qué editar
 ----------
 
-motor/politicas.py   las reglas del restaurante
-motor/casos.py       los pedidos de ejemplo
+motor/politicas.py              las reglas del restaurante
+motor/casos.py                  los pedidos de ejemplo y CASOS_CONSULTA
+motor/consultas.py              el subsistema de consultas (la clase Consulta)
+src/consultas/contenido.js      las piezas y las estructuras del segundo recorrido
+src/consultas/comentarios.js    el botón ? de esas piezas
+
+Rutas del subsistema de consultas:
+
+    GET  /api/consultas/guia    casos, recorridos y estructuras
+    POST /api/consultas/paso    {"respuestas": {"pidio_cancelar": "no", "llueve": null}}
+
+null es «no sé». La respuesta trae el estado de cada regla, los puntajes
+y la siguiente pregunta, o el fin de la consulta.
 
 Correr en local
 ---------------
@@ -41,7 +57,7 @@ Sin interfaz, los mismos casos:
 
 Pruebas del motor:
 
-    python3 -m unittest tests.test_despacho
+    python3 -m unittest tests.test_despacho tests.test_consultas
 
 Publicar en Vercel
 ------------------

@@ -10,6 +10,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from motor import inspeccion_consultas
 from motor.casos import PRESETS
 from motor.inspeccion import inspeccionar
 
@@ -42,6 +43,23 @@ def casos():
 def post_inspeccionar(pedido: PedidoIn):
     try:
         return inspeccionar(pedido.hechos, pedido.caso)
+    except (KeyError, TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+class ConsultaIn(BaseModel):
+    respuestas: dict = Field(default_factory=dict)
+
+
+@app.get("/api/consultas/guia")
+def consultas_guia():
+    return inspeccion_consultas.guia()
+
+
+@app.post("/api/consultas/paso")
+def consultas_paso(consulta: ConsultaIn):
+    try:
+        return inspeccion_consultas.paso(consulta.respuestas)
     except (KeyError, TypeError, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 

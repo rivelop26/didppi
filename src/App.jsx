@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { cargarCasos, inspeccionar } from "./api";
 import { PIEZAS, frontera } from "./contenido";
 import Comanda from "./componentes/Comanda";
+import Consultas from "./componentes/Consultas";
 import MomentoCero from "./componentes/MomentoCero";
 import Politicas from "./componentes/Politicas";
 import Portada from "./componentes/Portada";
@@ -27,6 +28,8 @@ export default function App() {
   const [politicasAbiertas, setPoliticasAbiertas] = useState(false);
   const [portada, setPortada] = useState(true);
   const [vista, setVista] = useState("mapa");
+  const [recorrido, setRecorrido] = useState("motor");
+  const [visitoConsultas, setVisitoConsultas] = useState(false);
 
   useEffect(() => {
     let vivo = true;
@@ -106,10 +109,14 @@ export default function App() {
           </button>
           <div>
             <p className="kicker">Sistemas expertos · IUSH</p>
-            <p className="subtitulo">El motor de un pedido a domicilio.</p>
+            <p className="subtitulo">
+              {!portada && recorrido === "consultas"
+                ? "El subsistema de consultas: qué preguntar y cuándo parar."
+                : "El motor de un pedido a domicilio."}
+            </p>
           </div>
         </div>
-        {completo && !portada && (
+        {completo && !portada && recorrido === "motor" && (
           <button type="button" className="btn btn-secundario" onClick={reiniciar}>
             Empezar otro recorrido
           </button>
@@ -119,11 +126,17 @@ export default function App() {
       {portada ? (
         <Portada
           onEntrar={() => {
+            setRecorrido("motor");
             setPortada(false);
             setVista("mapa");
           }}
+          onConsultas={() => {
+            setRecorrido("consultas");
+            setVisitoConsultas(true);
+            setPortada(false);
+          }}
         />
-      ) : (
+      ) : recorrido === "consultas" ? null : (
         <>
       {completo && (
         <p className="cierre">
@@ -200,6 +213,12 @@ export default function App() {
         onCerrar={() => setPoliticasAbiertas(false)}
       />
         </>
+      )}
+
+      {visitoConsultas && (
+        <div hidden={portada || recorrido !== "consultas"}>
+          <Consultas />
+        </div>
       )}
     </div>
   );

@@ -86,7 +86,9 @@ export default function Taller({
   onExito,
   onSiguiente,
   haySiguiente,
+  comentarios,
 }) {
+  const notas = comentarios || COMENTARIOS[pieza.id] || [];
   const [lineaId, setLineaId] = useState(null);
   const [respuesta, setRespuesta] = useState(null);
   const [varias, setVarias] = useState([]);
@@ -163,7 +165,7 @@ export default function Taller({
         <p className="hace">{pieza.hace}</p>
         <BloqueCodigo
           texto={codigoVisible(pieza, lineaLista, ordenLista)}
-          comentarios={COMENTARIOS[pieza.id] || []}
+          comentarios={notas}
         />
         <p className="exito">Esta pieza ya está en el motor.</p>
         {haySiguiente && (
@@ -186,7 +188,7 @@ export default function Taller({
 
       <BloqueCodigo
         texto={codigoVisible(pieza, linea, orden)}
-        comentarios={COMENTARIOS[pieza.id] || []}
+        comentarios={notas}
       />
 
       {pieza.tipoLinea === "orden" ? (
@@ -214,7 +216,8 @@ export default function Taller({
           </div>
           {revelar && (
             <p className="revela">
-              El ciclo corre así: agenda(), resolver(candidatas), disparar(regla, ciclo).
+              {pieza.revelaOrden ||
+                "El ciclo corre así: agenda(), resolver(candidatas), disparar(regla, ciclo)."}
             </p>
           )}
         </fieldset>

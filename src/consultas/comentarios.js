@@ -1,0 +1,50 @@
+export const COMENTARIOS_CONSULTAS = {
+  evaluar_condicion: [
+    { codigo: "attr, op, valor = cond", texto: "Desempaca la tupla: qué dato, qué comparación y contra qué valor." },
+    { codigo: "if attr not in self.hechos", texto: "Pregunta a la memoria de trabajo si el dato ya está. Es un dict: la búsqueda es directa." },
+    { codigo: "la línea que falta", texto: "Si el dato no está, la condición no es ni verdadera ni falsa. Hay que avisar que falta." },
+    { codigo: "return OPS[op](self.hechos[attr], valor)", texto: "Si el dato está, compara con la función del operador. Devuelve True o False." },
+  ],
+  estado_regla: [
+    { codigo: "faltan = []", texto: "La lista de datos que esta regla todavía necesita." },
+    { codigo: "if cond[0] in self.desconocidos", texto: "El cliente dijo «no sé» a un dato de esta regla: no se puede probar. Se descarta." },
+    { codigo: "r = self.evaluar_condicion(cond)", texto: "True, False o None para esta condición." },
+    { codigo: "if r is False", texto: "Una condición falsa ya decide el estado de la regla. La línea que falta corta aquí." },
+    { codigo: "if r is None and cond[0] not in faltan", texto: "Dato faltante: se anota una sola vez, aunque la regla lo pida dos veces (R6 mira la distancia dos veces)." },
+    { codigo: 'return "PENDIENTE", faltan', texto: "Ninguna falsa, pero faltan datos. Esto es lo que el subsistema puede preguntar." },
+    { codigo: 'return "VERDADERA", []', texto: "Todas se cumplen: la regla está lista para dispararse." },
+  ],
+  disparar: [
+    { codigo: "nombre, valor = regla.entonces", texto: "La conclusión de la regla, por ejemplo ('decision', 'enviar')." },
+    { codigo: "previo = self.conclusiones.get(valor)", texto: "¿Ya había certeza para esa conclusión? .get devuelve None si no." },
+    { codigo: "self.conclusiones[valor] = regla.cf", texto: "Primera vez: la certeza es la de la regla." },
+    { codigo: "la línea que falta", texto: "Segunda vez o más: se junta la certeza nueva con la que ya estaba, sin salirse de la escala." },
+    { codigo: "self.disparadas.append(regla.id)", texto: "La regla no se vuelve a disparar en la próxima revisión." },
+  ],
+  puntaje_pregunta: [
+    { codigo: "total = 0.0", texto: "El puntaje empieza en cero para este dato." },
+    { codigo: "for regla, faltan in pendientes", texto: "Recorre solo las reglas pendientes. Las falsas y las disparadas ya no piden nada." },
+    { codigo: "if attr in faltan", texto: "Solo suman las reglas que necesitan este dato." },
+    { codigo: "la línea que falta", texto: "El aporte de esta regla: su importancia, su certeza y cuántos datos le faltan." },
+    { codigo: "return total / self.costo.get(attr, 1)", texto: "Un dato caro baja su puntaje. Si nadie escribió el costo, vale 1." },
+  ],
+  siguiente_pregunta: [
+    { codigo: "candidatos = sorted({attr for _, faltan in pendientes for attr in faltan})", texto: "Junta en un set todos los datos que faltan, sin repetir. sorted() deja un orden fijo para los empates." },
+    { codigo: "la línea que falta", texto: "Elige uno de los candidatos. Aquí está toda la diferencia entre la estrategia ingenua y la inteligente." },
+  ],
+  guardar: [
+    { codigo: "if valor is None", texto: "None es lo que devuelve preguntar() cuando el cliente responde «no sé»." },
+    { codigo: "la línea que falta", texto: "El «no sé» se anota aparte, para descartar las reglas que lo necesitan y no volver a preguntar." },
+    { codigo: "self.hechos[attr] = valor", texto: "La respuesta entra a la memoria de trabajo. Las otras reglas la reutilizan gratis." },
+    { codigo: "self.preguntas_hechas.append(attr)", texto: "El orden de las preguntas queda guardado para explicar después." },
+  ],
+  correr: [
+    { codigo: "while True", texto: "El ciclo se repite hasta que una de las dos salidas lo corta." },
+    { codigo: "pendientes = self.…()", texto: "Primero se revisa con lo que ya se sabe: se disparan las verdaderas y se listan las pendientes." },
+    { codigo: "if self.…(): break", texto: "Parada temprana: si una conclusión llegó a 0.85, no se pregunta nada más." },
+    { codigo: "if not pendientes: break", texto: "No queda nada por probar: se entrega la mejor respuesta que haya." },
+    { codigo: "attr = self.…(pendientes)", texto: "Se elige el dato con el puntaje más alto." },
+    { codigo: "self.…(attr, self.preguntar(attr))", texto: "Se pregunta y se guarda. La vuelta siguiente revisa otra vez." },
+    { codigo: "return self.respuesta()", texto: "La conclusión con la certeza más alta, o ninguna." },
+  ],
+};
