@@ -1,4 +1,4 @@
-export default function Portada({ onEntrar, onConsultas }) {
+export default function Portada({ onEntrar, onConsultas, onExplicaciones }) {
   return (
     <main className="portada">
       <div className="logo-marco">
@@ -65,12 +65,29 @@ export default function Portada({ onEntrar, onConsultas }) {
         </ol>
       </section>
 
+      <section>
+        <h2>Tercer recorrido: el subsistema de explicaciones</h2>
+        <p>
+          La misma consulta, pero ahora el motor anota cada paso en una traza. Con esa traza responde
+          dos preguntas: «¿por qué me preguntas esto?» (WHY) y «¿cómo llegaste a esa conclusión?» (HOW).
+        </p>
+        <ol className="aprender">
+          <li>Una consulta en vivo: pides «por qué» hasta tres veces, ves crecer la traza y al final pides el HOW como frase y como árbol.</li>
+          <li>Las estructuras de Python de la traza: Evento, Traza, list, dict, tuple y str.</li>
+          <li>Siete piezas, de la A a la G: registrar, anotar la pregunta, anotar el descarte, aceptar «por qué», why, how y las plantillas.</li>
+          <li>El código completo del subsistema, para repasarlo y copiarlo.</li>
+        </ol>
+      </section>
+
       <div className="acciones">
         <button type="button" className="btn btn-principal" onClick={onEntrar}>
           Entrar al recorrido del motor
         </button>
         <button type="button" className="btn btn-principal btn-consultas" onClick={onConsultas}>
           Entrar al subsistema de consultas
+        </button>
+        <button type="button" className="btn btn-principal btn-explicaciones" onClick={onExplicaciones}>
+          Entrar al subsistema de explicaciones
         </button>
       </div>
     </main>

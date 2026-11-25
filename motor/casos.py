@@ -151,3 +151,49 @@ CASOS_CONSULTA = [
         "respuestas": _respuestas("ana", llueve=None),
     },
 ]
+
+
+# Subsistema de explicaciones: los mismos clientes, ahora preguntan «por qué».
+# porque dice cuántas veces seguidas pide «por qué» antes de responder ese dato.
+CASOS_EXPLICACION = [
+    {
+        "id": "ana",
+        "nombre": "Ana",
+        "titulo": "Pide WHY tres veces",
+        "relato": "Cerca y seco. Cuando le preguntan por el pago, escribe «por qué» tres veces seguidas.",
+        "respuestas": _respuestas("ana"),
+        "porque": {"pago_confirmado": 3},
+    },
+    {
+        "id": "sofia",
+        "nombre": "Sofía",
+        "titulo": "Una pregunta, un HOW",
+        "relato": "Pidió cancelar. Pregunta por qué le preguntan eso, y al final pide el HOW.",
+        "respuestas": _respuestas("sofia"),
+        "porque": {"pidio_cancelar": 1},
+    },
+    {
+        "id": "hugo",
+        "nombre": "Hugo",
+        "titulo": "Reglas descartadas",
+        "relato": "Sin pago y lejos. Su traza muestra por qué murió cada regla (WHY NOT).",
+        "respuestas": _respuestas("hugo"),
+        "porque": {"pago_confirmado": 1},
+    },
+    {
+        "id": "marco",
+        "nombre": "Marco",
+        "titulo": "Una regla en contra",
+        "relato": "A 6 km con lluvia. El HOW muestra R6 a favor y R7 en contra de enviar.",
+        "respuestas": _respuestas("marco"),
+        "porque": {"llueve": 2},
+    },
+    {
+        "id": "ana_sin_reporte",
+        "nombre": "Ana sin reporte",
+        "titulo": "Dice «no sé»",
+        "relato": "No sabe si llueve. La traza explica por qué el motor no concluye.",
+        "respuestas": _respuestas("ana", llueve=None),
+        "porque": {},
+    },
+]

@@ -3,6 +3,7 @@ import { cargarCasos, inspeccionar } from "./api";
 import { PIEZAS, frontera } from "./contenido";
 import Comanda from "./componentes/Comanda";
 import Consultas from "./componentes/Consultas";
+import Explicaciones from "./componentes/Explicaciones";
 import MomentoCero from "./componentes/MomentoCero";
 import Politicas from "./componentes/Politicas";
 import Portada from "./componentes/Portada";
@@ -30,6 +31,7 @@ export default function App() {
   const [vista, setVista] = useState("mapa");
   const [recorrido, setRecorrido] = useState("motor");
   const [visitoConsultas, setVisitoConsultas] = useState(false);
+  const [visitoExplicaciones, setVisitoExplicaciones] = useState(false);
 
   useEffect(() => {
     let vivo = true;
@@ -110,9 +112,11 @@ export default function App() {
           <div>
             <p className="kicker">Sistemas expertos · IUSH</p>
             <p className="subtitulo">
-              {!portada && recorrido === "consultas"
-                ? "El subsistema de consultas: qué preguntar y cuándo parar."
-                : "El motor de un pedido a domicilio."}
+              {portada || recorrido === "motor"
+                ? "El motor de un pedido a domicilio."
+                : recorrido === "consultas"
+                  ? "El subsistema de consultas: qué preguntar y cuándo parar."
+                  : "El subsistema de explicaciones: la traza, el WHY y el HOW."}
             </p>
           </div>
         </div>
@@ -135,8 +139,13 @@ export default function App() {
             setVisitoConsultas(true);
             setPortada(false);
           }}
+          onExplicaciones={() => {
+            setRecorrido("explicaciones");
+            setVisitoExplicaciones(true);
+            setPortada(false);
+          }}
         />
-      ) : recorrido === "consultas" ? null : (
+      ) : recorrido !== "motor" ? null : (
         <>
       {completo && (
         <p className="cierre">
@@ -218,6 +227,12 @@ export default function App() {
       {visitoConsultas && (
         <div hidden={portada || recorrido !== "consultas"}>
           <Consultas />
+        </div>
+      )}
+
+      {visitoExplicaciones && (
+        <div hidden={portada || recorrido !== "explicaciones"}>
+          <Explicaciones />
         </div>
       )}
     </div>

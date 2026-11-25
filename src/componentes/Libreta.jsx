@@ -6,17 +6,26 @@ const CAMPOS = [
   ["conclusiones", "self.conclusiones", "dict"],
 ];
 
-export default function Libreta({ titulo, relato, foto, anterior, error, children }) {
+export default function Libreta({
+  titulo,
+  relato,
+  foto,
+  anterior,
+  error,
+  children,
+  campos = CAMPOS,
+  esperando = !foto,
+}) {
   return (
     <aside className="comanda libreta" aria-label="Estado en Python">
       <p className="kicker">La consulta en Python</p>
       <h2>{titulo}</h2>
       {relato && <p className="relato">{relato}</p>}
       {error && <p className="fallo">{error}</p>}
-      {!foto && !error && <p className="espera">El motor está preparando la consulta.</p>}
+      {esperando && !error && <p className="espera">El motor está preparando la consulta.</p>}
       {foto && (
         <dl className="libreta-campos">
-          {CAMPOS.map(([clave, nombre, tipo]) => {
+          {campos.map(([clave, nombre, tipo]) => {
             const valor = foto.python[clave];
             const cambio = anterior && anterior.python[clave] !== valor;
             return (

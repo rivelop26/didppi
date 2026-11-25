@@ -14,6 +14,12 @@ El mismo pedido llega sin datos y el motor los pregunta. Tiene tres partes:
 una consulta en vivo (el estudiante responde como el cliente, incluso
 «No sé»), las estructuras de Python que la guardan y siete piezas de código.
 
+El tercer recorrido es el subsistema de explicaciones. La misma consulta
+anota cada paso en una traza; con ella responde WHY («¿por qué me
+preguntas esto?») y HOW («¿cómo llegaste a esa conclusión?»). Tiene una
+consulta en vivo, las estructuras de la traza, siete piezas (algoritmos
+A a G) y el código completo de motor/explicaciones.py para repasar.
+
 Qué editar
 ----------
 
@@ -22,6 +28,9 @@ motor/casos.py                  los pedidos de ejemplo y CASOS_CONSULTA
 motor/consultas.py              el subsistema de consultas (la clase Consulta)
 src/consultas/contenido.js      las piezas y las estructuras del segundo recorrido
 src/consultas/comentarios.js    el botón ? de esas piezas
+motor/explicaciones.py          Evento, Traza y ConsultaExplicable (WHY y HOW)
+src/explicaciones/contenido.js  las piezas y las estructuras del tercer recorrido
+src/explicaciones/comentarios.js el botón ? de esas piezas
 
 Rutas del subsistema de consultas:
 
@@ -30,6 +39,14 @@ Rutas del subsistema de consultas:
 
 null es «no sé». La respuesta trae el estado de cada regla, los puntajes
 y la siguiente pregunta, o el fin de la consulta.
+
+Rutas del subsistema de explicaciones:
+
+    GET  /api/explicaciones/guia    casos, estructuras y código
+    POST /api/explicaciones/paso    {"pasos": [["pidio_cancelar", "por qué"], ["pidio_cancelar", "no"]]}
+
+Los pasos van en el orden en que el motor pregunta. La respuesta trae la
+traza, el diálogo con cada WHY y, al final, el HOW como frase y como árbol.
 
 Correr en local
 ---------------
@@ -57,7 +74,7 @@ Sin interfaz, los mismos casos:
 
 Pruebas del motor:
 
-    python3 -m unittest tests.test_despacho tests.test_consultas
+    python3 -m unittest tests.test_despacho tests.test_consultas tests.test_explicaciones
 
 Publicar en Vercel
 ------------------

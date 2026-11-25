@@ -24,6 +24,25 @@ export function pasoConsulta(respuestas, signal) {
   });
 }
 
+export function cargarGuiaExplicaciones() {
+  return fetch("/api/explicaciones/guia").then(async (respuesta) => {
+    if (!respuesta.ok) throw new Error("El motor no entregó la guía de explicaciones.");
+    return respuesta.json();
+  });
+}
+
+export function pasoExplicacion(pasos, signal) {
+  return fetch("/api/explicaciones/paso", {
+    method: "POST",
+    signal,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pasos }),
+  }).then(async (respuesta) => {
+    if (!respuesta.ok) throw new Error("El motor no pudo seguir la explicación.");
+    return respuesta.json();
+  });
+}
+
 export function inspeccionar(caso, hechos, signal) {
   return fetch("/api/inspeccionar", {
     method: "POST",
